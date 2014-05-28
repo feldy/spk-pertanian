@@ -72,6 +72,252 @@
 		</tr>
 	</table>
 </form>
-<?php } else if ($_GET["hal"] == "crud_alternatif") { ?>
+<?php } else if ($_GET["hal"] == "nilai_daerah") { 
+	$kode = $_POST['kode_daerah'];
+?>
+	<form action="?hal=nilai_daerah" name="" method="post" enctype="multipart/form-data">
+		<!-- <input name="id" type="hidden" value=""> -->
+		<input name="action" type="hidden" value="add">
+		
+		<hr />
+		<table width="100%" border="0" cellspacing="4" cellpadding="4" class="tabel_reg">
+			<tr>
+				<td width="200">
+					Pilih Daerah :
+					<span class="required">*</span>
+				</td>
+				<td>
+					<select name="kode_daerah" onchange="submit()">
+						<option value='' selected='selected'>Pilih</option>
+						<?php
+							$x = mysql_query("SELECT * FROM m_daerah") or die(mysql_error());
+							while ($ax=mysql_fetch_array($x)) {
+								$str = "";
+								if ($kode == $ax["nama"]) {
+									$str = "selected=selected";
+								}
+								echo '<option '.$str.'value="'.$ax['nama'].'">'.$ax['nama'].'</option>';
+							}
+						?>
+					</select>	
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<?php 
+				if ($kode == "") {
+					
+				} else {
+					if (isset($_POST['save'])) {
+					
+						$suhu = $_POST['suhu'];
+						$drainase = $_POST['drainase'];
+						$tekstur = $_POST['tekstur'];
+						$kedalaman = $_POST['kedalaman'];
+						$ph = $_POST['ph'];
+						$p205 = $_POST['p205'];
+						$k20 = $_POST['k20'];
+						$salinitas = $_POST['salinitas'];
+						$kemiringan = $_POST['kemiringan'];
+						$batuan = $_POST['batuan'];
+						$singkapan = $_POST['singkapan'];
 
-<?php } else if ($_GET["hal"] == "crud_kriteria") {} ?>
+						mysql_query("INSERT INTO m_nilai_daerah VALUES ('$kode','$suhu','$drainase','$tekstur','$kedalaman','$ph','$p205','$k20','$salinitas','$kemiringan','$batuan','$singkapan')") or die(mysql_error());
+						echo "<script> window.location.href='?hal=nilai_daerah'</script>";
+					} else {
+						$xx = mysql_query("SELECT * FROM m_nilai_daerah where kode_daerah = '$kode'") or die(mysql_error());
+						$axx = mysql_fetch_array($xx);
+
+						$suhu = $axx['suhu'];
+						$drainase = $axx['drainase'];
+						$tekstur = $axx['tekstur'];
+						$kedalaman = $axx['kedalaman'];
+						$ph = $axx['ph'];
+						$p205 = $axx['p205'];
+						$k20 = $axx['k20'];
+						$salinitas = $axx['salinitas'];
+						$kemiringan = $axx['kemiringan'];
+						$batuan = $axx['batuan'];
+						$singkapan = $axx['singkapan'];
+					}
+			?>
+			<tr>
+				<td>Suhu Udara (Celcius)</td>
+				<td>
+					<input name="suhu" value="<?php echo $suhu; ?>" type="text" size="40" uppercase="true" class="m-wrap large">
+				</td>
+			</tr>
+			<tr>
+				<td>Drainase Tanah</td>
+				<td>
+					<select name="drainase">
+						<option <?php echo ($drainase == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
+						<option <?php echo ($drainase == "2") ? "selected='selected'" : "";?> value="2">Cepat</option>
+						<option <?php echo ($drainase == "3") ? "selected='selected'" : "";?> value="3">Agak Cepat</option>
+						<option <?php echo ($drainase == "4") ? "selected='selected'" : "";?> value="4">Baik</option>
+						<option <?php echo ($drainase == "5") ? "selected='selected'" : "";?> value="5">Jelek</option>
+						<option <?php echo ($drainase == "6") ? "selected='selected'" : "";?> value="6">Sangat Jelek</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Tekstur Tanah Atas</td>
+				<td>
+					<select name="tekstur">
+						<option <?php echo ($tekstur == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
+						<option <?php echo ($tekstur == "2") ? "selected='selected'" : "";?> value="2">Halus</option>
+						<option <?php echo ($tekstur == "3") ? "selected='selected'" : "";?> value="3">Kasar</option>
+						<option <?php echo ($tekstur == "4") ? "selected='selected'" : "";?> value="4">Pasir</option>
+						<option <?php echo ($tekstur == "5") ? "selected='selected'" : "";?> value="5">Kerikil</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Kedalaman Efektif (cm)</td>
+				<td>
+					<input name="kedalaman" value="<?php echo $kedalaman; ?>" type="text" size="40" uppercase="true" class="m-wrap large">
+				</td>
+			</tr>
+			<tr>
+				<td>pH Lapisan Atas</td>
+				<td>
+					<input name="ph" value="<?php echo $ph; ?>" type="text" size="40" uppercase="true" class="m-wrap large">
+				</td>
+			</tr>
+			<tr>
+				<td>P205 tersedia lapisan atas</td>
+				<td>
+					<select name="p205">
+						<option <?php echo ($p205 == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
+						<option <?php echo ($p205 == "2") ? "selected='selected'" : "";?> value="2">Sangat Tinggi</option>
+						<option <?php echo ($p205 == "3") ? "selected='selected'" : "";?> value="3">Tinggi</option>
+						<option <?php echo ($p205 == "4") ? "selected='selected'" : "";?> value="4">Sedang</option>
+						<option <?php echo ($p205 == "5") ? "selected='selected'" : "";?> value="5">Rendah</option>
+						<option <?php echo ($p205 == "6") ? "selected='selected'" : "";?> value="6">Sangat Rendah</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>K20 tersedia lapisan atas</td>
+				<td>
+					<select name="k20">
+						<option <?php echo ($k20 == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
+						<option <?php echo ($k20 == "2") ? "selected='selected'" : "";?> value="2">Sangat Tinggi</option>
+						<option <?php echo ($k20 == "3") ? "selected='selected'" : "";?> value="3">Tinggi</option>
+						<option <?php echo ($k20 == "4") ? "selected='selected'" : "";?> value="4">Sedang</option>
+						<option <?php echo ($k20 == "5") ? "selected='selected'" : "";?> value="5">Rendah</option>
+						<option <?php echo ($k20 == "6") ? "selected='selected'" : "";?> value="6">Sangat Rendah</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Salinitas lapisan bawah (%)</td>
+				<td>
+					<input name="salinitas" value="<?php echo $salinitas; ?>" type="text" size="40" uppercase="true" class="m-wrap large">
+				</td>
+			</tr>
+			<tr>
+				<td>Kemiringan Lereng (%)</td>
+				<td>
+					<input name="kemiringan" value="<?php echo $kemiringan; ?>" type="text" size="40" uppercase="true" class="m-wrap large">
+				</td>
+			</tr>
+			<tr>
+				<td>Batuan permukaan (%)</td>
+				<td>
+					<input name="batuan" value="<?php echo $batuan; ?>" type="text" size="40" uppercase="true" class="m-wrap large">
+				</td>
+			</tr>
+			<tr>
+				<td>Singkapan batuan (%)</td>
+				<td>
+					<input name="singkapan"  value="<?php echo $singkapan; ?>" type="text" size="40" uppercase="true" class="m-wrap large">
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<button type="submit" name="save" class="btn blue"> <i class="icon-ok"></i>
+						Simpan
+					</button>
+					<button type="button" name="cancel" class="btn" onclick="location.href='?hal=data_daerah'">Batal</button>
+				</td>
+			</tr>
+			<? } ?>
+		</table>
+	</form>
+<?php } else if ($_GET["hal"] == "crud_tanaman") { 
+	$id = "";
+	$action = "";
+	$kode = "";
+	$nama = "";
+	$jenis = "";
+	if (isset($_POST["save"])) {
+		$id = $_POST["id"];
+		$action = $_POST["action"];
+		$kode = $_POST["kode"];
+		$nama = $_POST["nama"];
+		$jenis = $_POST["jenis"];
+		if ($id == "") { //add new
+			$x = mysql_query("INSERT INTO m_tanaman VALUES ('$kode','$nama','$jenis')") or die (mysql_error());
+		} else {
+			$x = mysql_query("UPDATE m_tanaman SET nama = '$nama', jenis = '$jenis' where kode = '$kode'") or die (mysql_error());			
+		}
+		echo "<script> window.location.href='?hal=data_tanaman'</script>";
+	} else if ($_GET["action"] == "edit") {
+		$action = "";
+		$kode = $_GET["id"];
+
+		$s = mysql_query("SELECT * FROM m_tanaman where kode = '$kode'") or die (mysql_error());
+		$as = mysql_fetch_array($s);
+		$nama = $as['nama'];
+		$jenis = $as['jenis'];
+	} else if ($_GET["action"] == "delete") { 
+		$kode = $_GET["id"];
+		$x = mysql_query("DELETE FROM m_tanaman where kode = '$kode'") or die (mysql_error());
+		echo "<script> window.location.href='?hal=data_tanaman'</script>";
+	}
+?>
+<form action="?hal=crud_tanaman" name="" method="post" enctype="multipart/form-data">
+	<input name="id" type="hidden" value="<?php echo $kode;?>">
+	<input name="action" type="hidden" value="add">
+
+	<table width="100%" border="0" cellspacing="4" cellpadding="4" class="tabel_reg">
+		<tr>
+			<td width="120">
+				Kode
+				<span class="required">*</span>
+			</td>
+			<td>
+				<input name="kode" type="text" size="40" value="<?php echo $kode;?>" maxlength="5" uppercase="true" class="m-wrap large"></td>
+		</tr>
+		<tr>
+			<td>
+				Nama Tanaman
+				<span class="required">*</span>
+			</td>
+			<td>
+				<input name="nama" type="text" size="40" value="<?php echo $nama;?>" class="m-wrap large"></td>
+		</tr>
+		<tr>
+			<td>
+				Jenis
+				<span class="required">*</span>
+			</td>
+			<td>
+				<input name="jenis" type="text" size="40" value="<?php echo $jenis;?>" class="m-wrap large">
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<button type="submit" name="save" class="btn blue"> <i class="icon-ok"></i>
+					Simpan
+				</button>
+				<button type="button" name="cancel" class="btn" onclick="location.href='?hal=data_tanaman'">Batal</button>
+			</td>
+		</tr>
+	</table>
+</form>
+<?php } ?>

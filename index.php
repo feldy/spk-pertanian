@@ -58,7 +58,7 @@
 																	<a href="?hal=data_daerah">Data Daerah</a>
 																</li>
 																<li>
-																	<a href="?hal=data_alternatif">Data Alternatif</a>
+																	<a href="?hal=data_tanaman">Data Tanaman</a>
 																</li>
 																<li>
 																	<a href="?hal=data_kriteria">Data Kriteria</a>
@@ -67,6 +67,9 @@
 															<br>
 															<h3 class="prev-indent-bot2">Analisa</h3>
 															<ul class="list-2">
+																<li>
+																	<a href="?hal=nilai_daerah">Nilai Daerah</a>
+																</li>
 																<li>
 																	<a href="?hal=nilai_kriteria">Nilai Kriteria</a>
 																</li>

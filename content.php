@@ -42,11 +42,11 @@
 		<?php } ?>
 	</table>
 <?php
-	} else if ($_GET['hal'] == "data_alternatif") {	
+	} else if ($_GET['hal'] == "data_tanaman") {	
 ?>
-	<h3 class="p2">Data Alternatif</h3>
-	<a href="?hal=update_alternatif" class="btn blue" style="float:right"> <i class="icon-plus"></i>
-		Tambah data alternatif
+	<h3 class="p2">Data Tanaman</h3>
+	<a href="?hal=crud_tanaman" class="btn blue" style="float:right"> <i class="icon-plus"></i>
+		Tambah data Tanaman
 	</a>
 	<br />
 	<br />
@@ -55,25 +55,33 @@
 			<tr>
 				<th width="40">No</th>
 				<th width="160">Kode</th>
-				<th>Nama Alternatif</th>
+				<th>Nama Tanaman</th>
+				<th>Jenis</th>
 				<th width="90" align="right">&nbsp;</th>
 			</tr>
 		</thead>
+		<?php
+			$x = mysql_query("select * from m_tanaman") or die (mysql_error());
+			$no = 0;
+			while ($ax=mysql_fetch_array($x)) {
+			$no++;
+		?>
 		<tbody>
-
 			<tr>
-				<td valign="top">1</td>
-				<td valign="top">A01</td>
-				<td valign="top">Hendry Sudjana</td>
+				<td valign="top"><?php echo $no; ?></td>
+				<td valign="top"><?php echo $ax['kode']; ?></td>
+				<td valign="top"><?php echo $ax['nama']; ?></td>
+				<td valign="top"><?php echo $ax['jenis']; ?></td>
 				<td align="center" valign="top">
-					<a href="?hal=update_alternatif&amp;id=1&amp;action=edit" class="btn"> <i class="icon-edit"></i>
+					<a href="?hal=crud_tanaman&amp;id=<?php echo $ax['kode']; ?>&amp;action=edit" class="btn"> <i class="icon-edit"></i>
 					</a>
-					<a href="#" onclick="DeleteConfirm('?hal=update_alternatif&amp;id=1&amp;action=delete');return(false);" class="btn disabled">
+					<a href="#" onclick="DeleteConfirm('?hal=crud_tanaman&amp;id=<?php echo $ax['kode']; ?>&amp;action=delete');return(false);" class="btn disabled">
 						<i class="icon-trash"></i>
 					</a>
 				</td>
 			</tr>
 		</tbody>
+		<?php } ?>
 	</table>
 <?php } else if ($_GET['hal'] == "data_kriteria") {  ?>
 	<h3 class="p2">Data Kriteria</h3>
