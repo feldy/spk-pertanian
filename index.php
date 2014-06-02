@@ -57,11 +57,8 @@
 																<li>
 																	<a href="?hal=data_daerah">Data Daerah</a>
 																</li>
-																<li>
+																<li class="last-item">
 																	<a href="?hal=data_tanaman">Data Tanaman</a>
-																</li>
-																<li>
-																	<a href="?hal=data_kriteria">Data Kriteria</a>
 																</li>
 															</ul>
 															<br>
@@ -71,13 +68,10 @@
 																	<a href="?hal=nilai_daerah">Nilai Daerah</a>
 																</li>
 																<li>
-																	<a href="?hal=nilai_kriteria">Nilai Kriteria</a>
-																</li>
-																<li>
-																	<a href="?hal=nilai_alternatif">Nilai Alternatif</a>
+																	<a href="?hal=nilai_tanaman">Nilai Tanaman</a>
 																</li>
 																<li class="last-item">
-																	<a href="?hal=hasil_alternatif">Hasil Alternatif</a>
+																	<a href="?hal=hasil_alternatif">Hasil Analisa</a>
 																</li>
 															</ul>
 
