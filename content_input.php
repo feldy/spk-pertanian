@@ -111,35 +111,86 @@
 				} else {
 					if (isset($_POST['save'])) {
 					
-						$suhu = $_POST['suhu'];
-						$drainase = $_POST['drainase'];
-						$tekstur = $_POST['tekstur'];
-						$kedalaman = $_POST['kedalaman'];
-						$ph = $_POST['ph'];
-						$p205 = $_POST['p205'];
-						$k20 = $_POST['k20'];
-						$salinitas = $_POST['salinitas'];
-						$kemiringan = $_POST['kemiringan'];
-						$batuan = $_POST['batuan'];
-						$singkapan = $_POST['singkapan'];
+						// $suhu = $_POST['suhu'];
+						// $drainase = $_POST['drainase'];
+						// $tekstur = $_POST['tekstur'];
+						// $kedalaman = $_POST['kedalaman'];
+						// $ph = $_POST['ph'];
+						// $p205 = $_POST['p205'];
+						// $k20 = $_POST['k20'];
+						// $salinitas = $_POST['salinitas'];
+						// $kemiringan = $_POST['kemiringan'];
+						// $batuan = $_POST['batuan'];
+						// $singkapan = $_POST['singkapan'];
+						// mysql_query("INSERT INTO m_nilai_daerah VALUES ('$kode','$suhu','$drainase','$tekstur','$kedalaman','$ph','$p205','$k20','$salinitas','$kemiringan','$batuan','$singkapan')") or die(mysql_error());
+						
+						$arrField = array("suhu","drainase","tekstur","kedalaman","ph","p205","k20","salinitas","kemiringan","batuan","singkapan");
+						for ($i = 0; $i < count($arrField); $i++) {
+							if ($_POST[$arrField[$i]] != "" && $_POST[$arrField[$i]] != "0") {
+								// echo $arrField[$i]."->";
+								$kriteria = $arrField[$i];
+								$value = $_POST[$arrField[$i]];
+								$countSimpan++;
+								mysql_query("INSERT INTO m_nilai_daerah2 VALUES ('$kode','$kriteria', $value, '')") or die(mysql_error());
+							}
+						}
 
-						mysql_query("INSERT INTO m_nilai_daerah VALUES ('$kode','$suhu','$drainase','$tekstur','$kedalaman','$ph','$p205','$k20','$salinitas','$kemiringan','$batuan','$singkapan')") or die(mysql_error());
 						echo "<script> window.location.href='?hal=nilai_daerah'</script>";
 					} else {
-						$xx = mysql_query("SELECT * FROM m_nilai_daerah where kode_daerah = '$kode'") or die(mysql_error());
-						$axx = mysql_fetch_array($xx);
-
-						$suhu = $axx['suhu'];
-						$drainase = $axx['drainase'];
-						$tekstur = $axx['tekstur'];
-						$kedalaman = $axx['kedalaman'];
-						$ph = $axx['ph'];
-						$p205 = $axx['p205'];
-						$k20 = $axx['k20'];
-						$salinitas = $axx['salinitas'];
-						$kemiringan = $axx['kemiringan'];
-						$batuan = $axx['batuan'];
-						$singkapan = $axx['singkapan'];
+						$xx = mysql_query("SELECT * FROM m_nilai_daerah2 where kode_daerah = '$kode'") or die(mysql_error());
+						// $arrField = array("suhu","drainase","tekstur","kedalaman","ph","p205","k20","salinitas","kemiringan","batuan","singkapan");
+						while ($axx = mysql_fetch_array($xx)) {
+							switch ($axx['kriteria']) {
+								case 'suhu':
+									$suhu = $axx['nilai'];
+									break;
+								case 'drainase':
+									$drainase = $axx['nilai'];
+									break;
+								case 'tekstur':
+									$tekstur = $axx['nilai'];
+									break;
+								case 'kedalaman':
+									$kedalaman = $axx['nilai'];
+									break;
+								case 'ph':
+									$ph = $axx['nilai'];
+									break;
+								case 'p205':
+									$p205 = $axx['nilai'];
+									break;
+								case 'k20':
+									$k20 = $axx['nilai'];
+									break;
+								case 'salinitas':
+									$salinitas = $axx['nilai'];
+									break;
+								case 'kemiringan':
+									$kemiringan = $axx['nilai'];
+									break;
+								case 'batuan':
+									$batuan = $axx['nilai'];
+									break;
+								case 'singkapan':
+									$singkapan = $axx['nilai'];
+									break;
+								default:
+									break;
+							}
+							// echo $axx['kriteria']." - ".$axx['nilai']."<br>";
+						};
+						
+						// $suhu = $axx['suhu'];
+						// $drainase = $axx['drainase'];
+						// $tekstur = $axx['tekstur'];
+						// $kedalaman = $axx['kedalaman'];
+						// $ph = $axx['ph'];
+						// $p205 = $axx['p205'];
+						// $k20 = $axx['k20'];
+						// $salinitas = $axx['salinitas'];
+						// $kemiringan = $axx['kemiringan'];
+						// $batuan = $axx['batuan'];
+						// $singkapan = $axx['singkapan'];
 					}
 			?>
 			<tr>
@@ -152,12 +203,12 @@
 				<td>Drainase Tanah</td>
 				<td>
 					<select name="drainase">
-						<option <?php echo ($drainase == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-						<option <?php echo ($drainase == "2") ? "selected='selected'" : "";?> value="2">Cepat</option>
-						<option <?php echo ($drainase == "3") ? "selected='selected'" : "";?> value="3">Agak Cepat</option>
-						<option <?php echo ($drainase == "4") ? "selected='selected'" : "";?> value="4">Baik</option>
-						<option <?php echo ($drainase == "5") ? "selected='selected'" : "";?> value="5">Jelek</option>
-						<option <?php echo ($drainase == "6") ? "selected='selected'" : "";?> value="6">Sangat Jelek</option>
+						<option <?php echo ($drainase == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+						<option <?php echo ($drainase == "1") ? "selected='selected'" : "";?> value="1">Cepat</option>
+						<option <?php echo ($drainase == "2") ? "selected='selected'" : "";?> value="2">Agak Cepat</option>
+						<option <?php echo ($drainase == "3") ? "selected='selected'" : "";?> value="3">Baik</option>
+						<option <?php echo ($drainase == "4") ? "selected='selected'" : "";?> value="4">Jelek</option>
+						<option <?php echo ($drainase == "5") ? "selected='selected'" : "";?> value="5">Sangat Jelek</option>
 					</select>
 				</td>
 			</tr>
@@ -165,11 +216,11 @@
 				<td>Tekstur Tanah Atas</td>
 				<td>
 					<select name="tekstur">
-						<option <?php echo ($tekstur == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-						<option <?php echo ($tekstur == "2") ? "selected='selected'" : "";?> value="2">Halus</option>
-						<option <?php echo ($tekstur == "3") ? "selected='selected'" : "";?> value="3">Kasar</option>
-						<option <?php echo ($tekstur == "4") ? "selected='selected'" : "";?> value="4">Pasir</option>
-						<option <?php echo ($tekstur == "5") ? "selected='selected'" : "";?> value="5">Kerikil</option>
+						<option <?php echo ($tekstur == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+						<option <?php echo ($tekstur == "1") ? "selected='selected'" : "";?> value="1">Halus</option>
+						<option <?php echo ($tekstur == "2") ? "selected='selected'" : "";?> value="2">Kasar</option>
+						<option <?php echo ($tekstur == "3") ? "selected='selected'" : "";?> value="3">Pasir</option>
+						<option <?php echo ($tekstur == "4") ? "selected='selected'" : "";?> value="4">Kerikil</option>
 					</select>
 				</td>
 			</tr>
@@ -189,12 +240,12 @@
 				<td>P205 tersedia lapisan atas</td>
 				<td>
 					<select name="p205">
-						<option <?php echo ($p205 == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-						<option <?php echo ($p205 == "2") ? "selected='selected'" : "";?> value="2">Sangat Tinggi</option>
-						<option <?php echo ($p205 == "3") ? "selected='selected'" : "";?> value="3">Tinggi</option>
-						<option <?php echo ($p205 == "4") ? "selected='selected'" : "";?> value="4">Sedang</option>
-						<option <?php echo ($p205 == "5") ? "selected='selected'" : "";?> value="5">Rendah</option>
-						<option <?php echo ($p205 == "6") ? "selected='selected'" : "";?> value="6">Sangat Rendah</option>
+						<option <?php echo ($p205 == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+						<option <?php echo ($p205 == "1") ? "selected='selected'" : "";?> value="1">Sangat Tinggi</option>
+						<option <?php echo ($p205 == "2") ? "selected='selected'" : "";?> value="2">Tinggi</option>
+						<option <?php echo ($p205 == "3") ? "selected='selected'" : "";?> value="3">Sedang</option>
+						<option <?php echo ($p205 == "4") ? "selected='selected'" : "";?> value="4">Rendah</option>
+						<option <?php echo ($p205 == "5") ? "selected='selected'" : "";?> value="5">Sangat Rendah</option>
 					</select>
 				</td>
 			</tr>
@@ -202,12 +253,12 @@
 				<td>K20 tersedia lapisan atas</td>
 				<td>
 					<select name="k20">
-						<option <?php echo ($k20 == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-						<option <?php echo ($k20 == "2") ? "selected='selected'" : "";?> value="2">Sangat Tinggi</option>
-						<option <?php echo ($k20 == "3") ? "selected='selected'" : "";?> value="3">Tinggi</option>
-						<option <?php echo ($k20 == "4") ? "selected='selected'" : "";?> value="4">Sedang</option>
-						<option <?php echo ($k20 == "5") ? "selected='selected'" : "";?> value="5">Rendah</option>
-						<option <?php echo ($k20 == "6") ? "selected='selected'" : "";?> value="6">Sangat Rendah</option>
+						<option <?php echo ($k20 == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+						<option <?php echo ($k20 == "1") ? "selected='selected'" : "";?> value="1">Sangat Tinggi</option>
+						<option <?php echo ($k20 == "2") ? "selected='selected'" : "";?> value="2">Tinggi</option>
+						<option <?php echo ($k20 == "3") ? "selected='selected'" : "";?> value="3">Sedang</option>
+						<option <?php echo ($k20 == "4") ? "selected='selected'" : "";?> value="4">Rendah</option>
+						<option <?php echo ($k20 == "5") ? "selected='selected'" : "";?> value="5">Sangat Rendah</option>
 					</select>
 				</td>
 			</tr>
@@ -331,7 +382,7 @@
 	<table width="100%" border="0" cellspacing="4" cellpadding="4" class="tabel_reg">
 		<tr>
 			<td width="200">
-				Pilih Daerah :
+				Pilih Tanaman :
 				<span class="required">*</span>
 			</td>
 			<td>
@@ -357,23 +408,50 @@
 			if ($kode == "") {
 				
 			} else {
-				// if (isset($_POST['save'])) {
+				if (isset($_POST['save'])) {
 				
-				// 	$suhu = $_POST['suhu'];
-				// 	$drainase = $_POST['drainase'];
-				// 	$tekstur = $_POST['tekstur'];
-				// 	$kedalaman = $_POST['kedalaman'];
-				// 	$ph = $_POST['ph'];
-				// 	$p205 = $_POST['p205'];
-				// 	$k20 = $_POST['k20'];
-				// 	$salinitas = $_POST['salinitas'];
-				// 	$kemiringan = $_POST['kemiringan'];
-				// 	$batuan = $_POST['batuan'];
-				// 	$singkapan = $_POST['singkapan'];
+					$score = $_POST['score'];
 
-				// 	mysql_query("INSERT INTO m_nilai_daerah VALUES ('$kode','$suhu','$drainase','$tekstur','$kedalaman','$ph','$p205','$k20','$salinitas','$kemiringan','$batuan','$singkapan')") or die(mysql_error());
-				// 	echo "<script> window.location.href='?hal=nilai_daerah'</script>";
-				// } else {
+					$suhuMin = $_POST['suhuMin'];
+					$drainaseMin = $_POST['drainaseMin'];
+					$teksturMin = $_POST['teksturMin'];
+					$kedalamanMin = $_POST['kedalamanMin'];
+					$phMin = $_POST['phMin'];
+					$p205Min = $_POST['p205Min'];
+					$k20Min = $_POST['k20Min'];
+					$salinitasMin = $_POST['salinitasMin'];
+					$kemiringanMin = $_POST['kemiringanMin'];
+					$batuanMin = $_POST['batuanMin'];
+					$singkapanMin = $_POST['singkapanMin'];
+
+					$suhuMax = $_POST['suhuMax'];
+					$drainaseMax = $_POST['drainaseMax'];
+					$teksturMax = $_POST['teksturMax'];
+					$kedalamanMax = $_POST['kedalamanMax'];
+					$phMax = $_POST['phMax'];
+					$p205Max = $_POST['p205Max'];
+					$k20Max = $_POST['k20Max'];
+					$salinitasMax = $_POST['salinitasMax'];
+					$kemiringanMax = $_POST['kemiringanMax'];
+					$batuanMax = $_POST['batuanMax'];
+					$singkapanMax = $_POST['singkapanMax'];
+
+					$arrField = array("suhu","drainase","tekstur","kedalaman","ph","p205","k20","salinitas","kemiringan","batuan","singkapan");
+					// echo "?".$suhuMin."<br>";
+					// echo "??".$_POST[$arrField[0]."Min"]."<br>";
+					$countSimpan = 0;
+					for ($i = 0; $i < count($arrField); $i++) {
+						if (($_POST[$arrField[$i]."Min"] != "" && $_POST[$arrField[$i]."Max"] != "") && ($_POST[$arrField[$i]."Min"] != "0" && $_POST[$arrField[$i]."Max"] != "0")) {
+							// echo $arrField[$i]."->";
+							$kriteria = $arrField[$i];
+							$minValue = $_POST[$arrField[$i]."Min"];
+							$maxValue = $_POST[$arrField[$i]."Max"];
+							$countSimpan++;
+							mysql_query("INSERT INTO m_nilai_tanaman VALUES ('','$kode','$kriteria', $minValue, $maxValue,'$score')") or die(mysql_error());
+						}
+					}
+					echo "<script> window.location.href='?hal=nilai_tanaman'</script>";
+				} else {
 				// 	$xx = mysql_query("SELECT * FROM m_nilai_daerah where kode_daerah = '$kode'") or die(mysql_error());
 				// 	$axx = mysql_fetch_array($xx);
 
@@ -388,7 +466,7 @@
 				// 	$kemiringan = $axx['kemiringan'];
 				// 	$batuan = $axx['batuan'];
 				// 	$singkapan = $axx['singkapan'];
-				// }
+				}
 		?>
 		<tr>
 			<td>Suhu Udara (Celcius)</td>
@@ -402,21 +480,21 @@
 			<td>Drainase Tanah</td>
 			<td>
 				<select name="drainaseMin" style="width: 135px" >
-					<option <?php echo ($drainase == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-					<option <?php echo ($drainase == "2") ? "selected='selected'" : "";?> value="2">Cepat</option>
-					<option <?php echo ($drainase == "3") ? "selected='selected'" : "";?> value="3">Agak Cepat</option>
-					<option <?php echo ($drainase == "4") ? "selected='selected'" : "";?> value="4">Baik</option>
-					<option <?php echo ($drainase == "5") ? "selected='selected'" : "";?> value="5">Jelek</option>
-					<option <?php echo ($drainase == "6") ? "selected='selected'" : "";?> value="6">Sangat Jelek</option>
+					<option <?php echo ($drainase == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+					<option <?php echo ($drainase == "1") ? "selected='selected'" : "";?> value="1">Cepat</option>
+					<option <?php echo ($drainase == "2") ? "selected='selected'" : "";?> value="2">Agak Cepat</option>
+					<option <?php echo ($drainase == "3") ? "selected='selected'" : "";?> value="3">Baik</option>
+					<option <?php echo ($drainase == "4") ? "selected='selected'" : "";?> value="4">Jelek</option>
+					<option <?php echo ($drainase == "5") ? "selected='selected'" : "";?> value="5">Sangat Jelek</option>
 				</select>
 				s/d
 				<select name="drainaseMax" style="width: 135px" >
-					<option <?php echo ($drainase == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-					<option <?php echo ($drainase == "2") ? "selected='selected'" : "";?> value="2">Cepat</option>
-					<option <?php echo ($drainase == "3") ? "selected='selected'" : "";?> value="3">Agak Cepat</option>
-					<option <?php echo ($drainase == "4") ? "selected='selected'" : "";?> value="4">Baik</option>
-					<option <?php echo ($drainase == "5") ? "selected='selected'" : "";?> value="5">Jelek</option>
-					<option <?php echo ($drainase == "6") ? "selected='selected'" : "";?> value="6">Sangat Jelek</option>
+					<option <?php echo ($drainase == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+					<option <?php echo ($drainase == "1") ? "selected='selected'" : "";?> value="1">Cepat</option>
+					<option <?php echo ($drainase == "2") ? "selected='selected'" : "";?> value="2">Agak Cepat</option>
+					<option <?php echo ($drainase == "3") ? "selected='selected'" : "";?> value="3">Baik</option>
+					<option <?php echo ($drainase == "4") ? "selected='selected'" : "";?> value="4">Jelek</option>
+					<option <?php echo ($drainase == "5") ? "selected='selected'" : "";?> value="5">Sangat Jelek</option>
 				</select>
 			</td>
 		</tr>
@@ -424,19 +502,19 @@
 			<td>Tekstur Tanah Atas</td>
 			<td>
 				<select name="teksturMin" style="width: 135px" >
-					<option <?php echo ($tekstur == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-					<option <?php echo ($tekstur == "2") ? "selected='selected'" : "";?> value="2">Halus</option>
-					<option <?php echo ($tekstur == "3") ? "selected='selected'" : "";?> value="3">Kasar</option>
-					<option <?php echo ($tekstur == "4") ? "selected='selected'" : "";?> value="4">Pasir</option>
-					<option <?php echo ($tekstur == "5") ? "selected='selected'" : "";?> value="5">Kerikil</option>
+					<option <?php echo ($tekstur == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+					<option <?php echo ($tekstur == "1") ? "selected='selected'" : "";?> value="1">Halus</option>
+					<option <?php echo ($tekstur == "2") ? "selected='selected'" : "";?> value="2">Kasar</option>
+					<option <?php echo ($tekstur == "3") ? "selected='selected'" : "";?> value="3">Pasir</option>
+					<option <?php echo ($tekstur == "4") ? "selected='selected'" : "";?> value="4">Kerikil</option>
 				</select>
 				s/d
 				<select name="teksturMax" style="width: 135px" >
-					<option <?php echo ($tekstur == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-					<option <?php echo ($tekstur == "2") ? "selected='selected'" : "";?> value="2">Halus</option>
-					<option <?php echo ($tekstur == "3") ? "selected='selected'" : "";?> value="3">Kasar</option>
-					<option <?php echo ($tekstur == "4") ? "selected='selected'" : "";?> value="4">Pasir</option>
-					<option <?php echo ($tekstur == "5") ? "selected='selected'" : "";?> value="5">Kerikil</option>
+					<option <?php echo ($tekstur == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+					<option <?php echo ($tekstur == "1") ? "selected='selected'" : "";?> value="1">Halus</option>
+					<option <?php echo ($tekstur == "2") ? "selected='selected'" : "";?> value="2">Kasar</option>
+					<option <?php echo ($tekstur == "3") ? "selected='selected'" : "";?> value="3">Pasir</option>
+					<option <?php echo ($tekstur == "4") ? "selected='selected'" : "";?> value="4">Kerikil</option>
 				</select>
 			</td>
 		</tr>
@@ -460,21 +538,21 @@
 			<td>P205 tersedia lapisan atas</td>
 			<td>
 				<select name="p205Min" style="width: 135px">
-					<option <?php echo ($p205 == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-					<option <?php echo ($p205 == "2") ? "selected='selected'" : "";?> value="2">Sangat Tinggi</option>
-					<option <?php echo ($p205 == "3") ? "selected='selected'" : "";?> value="3">Tinggi</option>
-					<option <?php echo ($p205 == "4") ? "selected='selected'" : "";?> value="4">Sedang</option>
-					<option <?php echo ($p205 == "5") ? "selected='selected'" : "";?> value="5">Rendah</option>
-					<option <?php echo ($p205 == "6") ? "selected='selected'" : "";?> value="6">Sangat Rendah</option>
+					<option <?php echo ($p205 == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+					<option <?php echo ($p205 == "1") ? "selected='selected'" : "";?> value="1">Sangat Tinggi</option>
+					<option <?php echo ($p205 == "2") ? "selected='selected'" : "";?> value="2">Tinggi</option>
+					<option <?php echo ($p205 == "3") ? "selected='selected'" : "";?> value="3">Sedang</option>
+					<option <?php echo ($p205 == "4") ? "selected='selected'" : "";?> value="4">Rendah</option>
+					<option <?php echo ($p205 == "5") ? "selected='selected'" : "";?> value="5">Sangat Rendah</option>
 				</select>
 				s/d
 				<select name="p205Max" style="width: 135px">
-					<option <?php echo ($p205 == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-					<option <?php echo ($p205 == "2") ? "selected='selected'" : "";?> value="2">Sangat Tinggi</option>
-					<option <?php echo ($p205 == "3") ? "selected='selected'" : "";?> value="3">Tinggi</option>
-					<option <?php echo ($p205 == "4") ? "selected='selected'" : "";?> value="4">Sedang</option>
-					<option <?php echo ($p205 == "5") ? "selected='selected'" : "";?> value="5">Rendah</option>
-					<option <?php echo ($p205 == "6") ? "selected='selected'" : "";?> value="6">Sangat Rendah</option>
+					<option <?php echo ($p205 == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+					<option <?php echo ($p205 == "1") ? "selected='selected'" : "";?> value="1">Sangat Tinggi</option>
+					<option <?php echo ($p205 == "2") ? "selected='selected'" : "";?> value="2">Tinggi</option>
+					<option <?php echo ($p205 == "3") ? "selected='selected'" : "";?> value="3">Sedang</option>
+					<option <?php echo ($p205 == "4") ? "selected='selected'" : "";?> value="4">Rendah</option>
+					<option <?php echo ($p205 == "5") ? "selected='selected'" : "";?> value="5">Sangat Rendah</option>
 				</select>
 			</td>
 		</tr>
@@ -482,21 +560,21 @@
 			<td>K20 tersedia lapisan atas</td>
 			<td>
 				<select name="k20Min" style="width: 135px">
-					<option <?php echo ($k20 == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-					<option <?php echo ($k20 == "2") ? "selected='selected'" : "";?> value="2">Sangat Tinggi</option>
-					<option <?php echo ($k20 == "3") ? "selected='selected'" : "";?> value="3">Tinggi</option>
-					<option <?php echo ($k20 == "4") ? "selected='selected'" : "";?> value="4">Sedang</option>
-					<option <?php echo ($k20 == "5") ? "selected='selected'" : "";?> value="5">Rendah</option>
-					<option <?php echo ($k20 == "6") ? "selected='selected'" : "";?> value="6">Sangat Rendah</option>
+					<option <?php echo ($k20 == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+					<option <?php echo ($k20 == "1") ? "selected='selected'" : "";?> value="1">Sangat Tinggi</option>
+					<option <?php echo ($k20 == "2") ? "selected='selected'" : "";?> value="2">Tinggi</option>
+					<option <?php echo ($k20 == "3") ? "selected='selected'" : "";?> value="3">Sedang</option>
+					<option <?php echo ($k20 == "4") ? "selected='selected'" : "";?> value="4">Rendah</option>
+					<option <?php echo ($k20 == "5") ? "selected='selected'" : "";?> value="5">Sangat Rendah</option>
 				</select>
 				s/d
 				<select name="k20Max" style="width: 135px">
-					<option <?php echo ($k20 == "1") ? "selected='selected'" : "";?> value="1">Tidak Tersedia</option>
-					<option <?php echo ($k20 == "2") ? "selected='selected'" : "";?> value="2">Sangat Tinggi</option>
-					<option <?php echo ($k20 == "3") ? "selected='selected'" : "";?> value="3">Tinggi</option>
-					<option <?php echo ($k20 == "4") ? "selected='selected'" : "";?> value="4">Sedang</option>
-					<option <?php echo ($k20 == "5") ? "selected='selected'" : "";?> value="5">Rendah</option>
-					<option <?php echo ($k20 == "6") ? "selected='selected'" : "";?> value="6">Sangat Rendah</option>
+					<option <?php echo ($k20 == "0") ? "selected='selected'" : "";?> value="0">Tidak Tersedia</option>
+					<option <?php echo ($k20 == "1") ? "selected='selected'" : "";?> value="1">Sangat Tinggi</option>
+					<option <?php echo ($k20 == "2") ? "selected='selected'" : "";?> value="2">Tinggi</option>
+					<option <?php echo ($k20 == "3") ? "selected='selected'" : "";?> value="3">Sedang</option>
+					<option <?php echo ($k20 == "4") ? "selected='selected'" : "";?> value="4">Rendah</option>
+					<option <?php echo ($k20 == "5") ? "selected='selected'" : "";?> value="5">Sangat Rendah</option>
 				</select>
 			</td>
 		</tr>
@@ -550,4 +628,56 @@
 		<? } ?>
 	</table>
 </form>
-<?php } ?>
+<?php } else if ($_GET["hal"] == "hasil_analisa") { 
+	$kode = $_POST['kode_daerah'];
+?>
+<form action="?hal=hasil_analisa" name="" method="post" enctype="multipart/form-data">
+	<!-- <input name="id" type="hidden" value=""> -->
+	<input name="action" type="hidden" value="add">
+	
+	<hr />
+	<table width="100%" border="0" cellspacing="4" cellpadding="4" class="tabel_reg">
+		<tr>
+			<td width="200">
+				Pilih Daerah :
+				<span class="required">*</span>
+			</td>
+			<td>
+				<select name="kode_daerah" onchange="submit()">
+					<option value='' selected='selected'>Pilih</option>
+					<?php
+						$x = mysql_query("SELECT * FROM m_daerah") or die(mysql_error());
+						while ($ax=mysql_fetch_array($x)) {
+							$str = "";
+							if ($kode == $ax["nama"]) {
+								$str = "selected=selected";
+							}
+							echo '<option '.$str.'value="'.$ax['nama'].'">'.$ax['nama'].'</option>';
+						}
+					?>
+				</select>	
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><hr /></td>
+		</tr>
+		
+		<tr>
+			<td colspan="2">
+				<canvas id="myChart" width="400" height="400"></canvas>
+				<?php 
+					if ($kode != "") {
+						$newArray = array();
+						$query = mysql_query("SELECT * from m_daerah");
+						while ($arra = mysql_fetch_array($query)) {
+							array_push($newArray, $arra['nama']);
+						}
+						$finalArr = json_encode($newArray);
+						echo "<script>createChart($finalArr)</script>";
+					}
+				?>
+			</td>
+		</tr>
+	</table>
+</form>
+<? } ?>

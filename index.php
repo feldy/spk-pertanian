@@ -8,6 +8,9 @@
 	<link rel="stylesheet" href="lib/other/bootstrap.css" type="text/css" media="screen">
 	<!-- <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css" type="text/css" media="screen"> -->
 	<script src="lib/other/jquery-1.6.2.min.js" type="text/javascript"></script>
+	<script src="lib/jquery/prettify.js" type="text/javascript"></script>
+	<script src="lib/jquery/Chart.js" type="text/javascript"></script>
+	<script src="js/main.js" type="text/javascript"></script>
 </head>
 <?php 
 	include 'config.php';
@@ -71,7 +74,7 @@
 																	<a href="?hal=nilai_tanaman">Nilai Tanaman</a>
 																</li>
 																<li class="last-item">
-																	<a href="?hal=hasil_alternatif">Hasil Analisa</a>
+																	<a href="?hal=hasil_analisa">Hasil Analisa</a>
 																</li>
 															</ul>
 
