@@ -452,6 +452,14 @@
 					}
 					echo "<script> window.location.href='?hal=nilai_tanaman'</script>";
 				} else {
+					// select 
+					// 	nt.kode_tanaman as tanaman,
+					// 	(sum(nt.score) / (count(*) * 100)) * 100 as percentage
+					// from m_nilai_tanaman nt
+					// where (select dae.nilai FROM m_nilai_daerah2 dae where dae.kode_daerah = 'DEPOK' and dae.kriteria = nt.kriteria) between nt.min_value and nt.max_value
+					// group by nt.kode_tanaman
+					// order by nt.kode_tanaman, id
+					// 
 				// 	$xx = mysql_query("SELECT * FROM m_nilai_daerah where kode_daerah = '$kode'") or die(mysql_error());
 				// 	$axx = mysql_fetch_array($xx);
 
@@ -664,16 +672,41 @@
 		
 		<tr>
 			<td colspan="2">
-				<canvas id="myChart" width="400" height="400"></canvas>
+				<?php if ($kode != "") { ?>
+				<!-- <canvas id="myChart" width="400" height="400"></canvas> -->
+				<table border="1" width="100%" cellpadding="3" cellspacing="3" class="tabel_reg"> 
+					<tr align="center">
+						<td colspan='3'><h3 class="p2">Tanaman yang tumbuh subur di daerah anda</h3></td>
+					</tr>
+					<tr >
+						<td valign="middle" align="right" width="2px"><div style="-webkit-transform: rotate(270deg);"><h4 class="p2">Percentase</h4></div></td>
+						<td width="0" align="center"><div id="myChart" style="margin-top:20px; margin-left:20px; width:100%; height:100%;"></div></td>
+						<td valign="middle" width="10PX"><div style="-webkit-transform: rotate(90deg);">&nbsp;</div></td>
+					</tr>
+					<tr align="center">
+						<td colspan='3'><h4 class="p2">Nama Tumbuhan</h4></td>
+					</tr>
+				</table>
+				<!-- <div id="myChart" style="margin-top:20px; margin-left:20px; width:300px; height:300px;"></div> -->
 				<?php 
-					if ($kode != "") {
-						$newArray = array();
-						$query = mysql_query("SELECT * from m_daerah");
+					
+						$newArrayTanaman = array();
+						$newArrayScore = array();
+						$query = mysql_query("select 
+							nt.kode_tanaman as tanaman,
+							(sum(nt.score) / (count(*) * 100)) * 100 as percentage
+						from m_nilai_tanaman nt
+						where (select dae.nilai FROM m_nilai_daerah2 dae where dae.kode_daerah = '$kode' and dae.kriteria = nt.kriteria) between nt.min_value and nt.max_value
+						group by nt.kode_tanaman
+						order by nt.kode_tanaman") or die (mysql_error());
 						while ($arra = mysql_fetch_array($query)) {
-							array_push($newArray, $arra['nama']);
+							array_push($newArrayTanaman, $arra['tanaman']);
+							array_push($newArrayScore, $arra['percentage']);
 						}
-						$finalArr = json_encode($newArray);
-						echo "<script>createChart($finalArr)</script>";
+						$finalArr1 = json_encode($newArrayTanaman);
+						$finalArr2 = json_encode($newArrayScore);
+						echo "<script>createChart($finalArr1, $finalArr2)</script>";
+						// echo $finalArr2;
 					}
 				?>
 			</td>

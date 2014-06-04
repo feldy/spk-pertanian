@@ -11,6 +11,14 @@
 	<script src="lib/jquery/prettify.js" type="text/javascript"></script>
 	<script src="lib/jquery/Chart.js" type="text/javascript"></script>
 	<script src="js/main.js" type="text/javascript"></script>
+
+	<script type="text/javascript" src="lib/jquery/jqPlot/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/jquery/jqPlot/jquery.jqplot.min.js"></script>
+	<script type="text/javascript" src="lib/jquery/jqPlot/plugins/jqplot.barRenderer.min.js"></script>
+	<script type="text/javascript" src="lib/jquery/jqPlot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+	<!-- // <script type="text/javascript" src="lib/jquery/jqPlot/plugins/jqplot.enhancedLegendRenderer.min.js"></script> -->
+	<script type="text/javascript" src="lib/jquery/jqPlot/plugins/jqplot.pointLabels.min.js"></script>
+	<link rel="stylesheet" type="text/css" hrf="lib/jquery/jqPlot/jquery.jqplot.min.css" />
 </head>
 <?php 
 	include 'config.php';
