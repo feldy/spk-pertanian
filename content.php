@@ -119,8 +119,8 @@
 	<h3 class="p2">Sekilas Tentang Aplikasi</h3>
 	<div class="extra-wrap">
 		<h6 class="prev-indent-bot">
-			Test Aplikasi
+			Tujuan Pembuatan Aplikasi
 		</h6>
 	</div>
-	<p>Penjelasan aplikasi ini</p>
+	<p>Menentukan jenis Tanaman berdasarkan kesesuaian lahan</p>
 <?php } ?>

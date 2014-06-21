@@ -32,9 +32,9 @@
 				<div class="container_12">
 					<div class="grid_9">
 						<h1>
-							<!-- <span>spk</span> -->
+							<!-- <span>Menentukan jenis Tanaman berdasarkan kesesuaian lahan</span> -->
 							<a class="logo" href="./">
-								 <strong>Coba-Coba ahh...</strong>
+								 <strong>SPK PERTANIAN</strong>
 							</a>
 						</h1>
 					</div>
